@@ -22,6 +22,7 @@ var numberList = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 let originalValues = [];
 let myValues = [];
+let exampleValues = [7, "", 9, "", "", 2, "", "", "", 4, "", 6, "", 3, 1, 8, "", "", 3, 1, 2, 9, 4, 8, 6, 5, 7, 9, "", 7, "", "", 5, 1, "", 6, "", 2, "", 3, "", 6, 9, "", "", 1, 6, "", 2, "", "", 5, 3, 8, 8, "", 5, "", 2, 3, "", "", 1, 6, "", "", 1, "", 4, 2, 8, 9, 2, 4, 1, 8, 7, "", 3, "", 5];
 
 let valuesTaken, availableValues;
 let myTable = document.getElementsByTagName("tbody");
@@ -58,7 +59,7 @@ function start() {
             if (availableValues.length === 0) {
                 // alert("didn't find a solution, starting again");
                 console.log("didn't find a solution, starting again");
-                restoreGrid();
+                restoreGrid(originalValues);
                 return start();
             }
             
@@ -172,8 +173,8 @@ function updateAvailable() {
 }
 
 //put the correct values on the grid. data is in originalValues array.
-function restoreGrid() {
+function restoreGrid(arrayOfValues) {
     for (let index = 0; index < length * length; index++) {
-        inputs[index].value = originalValues[index];
+        inputs[index].value = arrayOfValues[index];
     }   
 }
