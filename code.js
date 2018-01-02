@@ -1,20 +1,3 @@
-
-
-//make a 9x9 grid. 
-// make an array of 81 numbers. but they cannot be random.
-// start by rows. that is, randomly assign 9
-
-
-// first lets try a 4x4 sudoku.
-
-//make an array of 16 numbers (4 per row)
-//randomly assign the first number in the first row (out of 1-4), then randomly assign out of the remaining numbers and 
-// so on until you fill the entire row. Now the fun starts...
-
-//squareLength = 2
-
-//start with a solver than is just brute force. when error detected, you start again with random numbers. eventually you'll get there...
-
 var squareLength = 3;
 var length = 9;
 
@@ -22,98 +5,109 @@ var numberList = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 let originalValues = [];
 let myValues = [];
-let exampleValues = [7, "", 9, "", "", 2, "", "", "", 4, "", 6, "", 3, 1, 8, "", "", 3, 1, 2, 9, 4, 8, 6, 5, 7, 9, "", 7, "", "", 5, 1, "", 6, "", 2, "", 3, "", 6, 9, "", "", 1, 6, "", 2, "", "", 5, 3, 8, 8, "", 5, "", 2, 3, "", "", 1, 6, "", "", 1, "", 4, 2, 8, 9, 2, 4, 1, 8, 7, "", 3, "", 5];
+let backup = [];
+let exampleValues = [7, 8, 9, 5, 6, 2, 4, 1, 3, 4, 5, 6, 7, 3, 1, 8, 9, 2, 3, 1, 2, 9, 4, 8, 6, 5, 7, 9, 3, 7, 4, 8, 5, 1, 2, 6, 5, 2, 8, 3, 1, 6, 9, 7, 4, 1, 6, 4, 2, 9, 7, 5, 3, 8, 8, 9, 5, 6, 2, 3, 7, 4, 1, 6, 7, 3, 1, 5, 4, 2, 8, 9, 2, 4, 1, 8, 7, 9, 3, 6, 5]
 
-let valuesTaken, availableValues;
+let solved;
 let myTable = document.getElementsByTagName("tbody");
 let inputs = document.getElementsByTagName("input");
 
-//go through each entry. if that entry is already filled, do nothing. if  that entry is 'x' then
-// apply the for loops above (but need to imporve them), then
-//get the available numbers and choose a random one of them.
-//when you get to a point where no available numbers, and you haven't finished yet,
-//then bring back the original values and start all over.
 function initiate() {
+    solved = false;
+    backup = [];
     gatherData();
-    start();
+    myValues = originalValues.slice();
+    solve(0, false);
 }
 
-function start() {
-    // gatherData();
-    myValues = originalValues.slice(); 
-    for (let entry = 0; entry < length * length; entry++) {
-        console.log("entered the loop, with entry value of " + entry);
-        if (myValues[entry] === "") {
-            //apply checks
-            //choose a random number from available
-            //input that number into the array of myValues, in the place of the ""
-            checkPossible(entry);
-            //so now we have added the numbers that are already taken into the valuesTaken array
-            //so what we need to do is compare valuesTaken with numberList, get a list of the available ones and choose
-            // a random one from them and input it in the place of the "" in myValues array.
-
-            //if after the entire checkPossible of that element, there are no values available, then var myValues = originalValues.slice(); and 
-            // start() again.
-            updateAvailable();
-
-            if (availableValues.length === 0) {
-                // alert("didn't find a solution, starting again");
-                console.log("didn't find a solution, starting again");
-                restoreGrid(originalValues);
-                return start();
-            }
-            
-            else {
-                //now I should have the avalableValues array with only those that can be put in place of x
-                //put a random one in place of x in the myValues array.
-                // console.log("current entry is: ");
-                // console.log(entry);
-                console.log("available values are: ");
-                console.log(availableValues);
-                // console.log("current state is: ");
-                // console.log(myValues);
-                let newVal = availableValues[getRandomIndex()];
-                console.log("newVal chosen: ");
-                console.log(newVal);
-                myValues.splice(entry, 1, newVal);
-                // console.log("current myValues: ");
-                // console.log(myValues);
-                updateGrid(entry);
-                // console.log("and after changing, state is: ");
-                // console.log(myValues);
-            }
-
-        }
+function solve(index, last) {
+    console.log("in solve function. index is " + index);
+    //finished
+    if (index === 81) {
+        solved = true;
+        
+        fillGrid(myValues);
+        return;
     }
 
+    if (myValues[index] !== "") {
+        return solve(index+1, last);
+    }
+    
+    let available = getAvailable(checkPossible(index));
+
+    console.log("available values are:");
+    console.log(available);
+    if (available.length === 0) {
+        if (last) {
+
+            let isLast = backup[backup.length-1]["last"];
+            backup.pop();
+            console.log("popped");
+            console.log(backup[backup.length -1]);
+
+            while (isLast) {
+                isLast = backup[backup.length-1]["last"];
+                backup.pop();
+            }
+        }
+        return;
+    }
+
+    else {
+        let sifted;
+        if (available !== 1) {
+            sifted = siftAvailable(available, index);
+        }
+        else {
+            sifted = available.slice()
+        }
+        console.log("sifted values are: ");
+        console.log(sifted);
+        backup.push(new log(myValues.slice(), last));
+        console.log("backing up");
+        // console.log(myValues);
+
+        for (let value = 0; value < sifted.length; value++) {
+            console.log("in for loop with value: " + value);
+            console.log("index is: " + index);
+            // console.log("backups array is ");
+            // console.log(backup);
+            // console.log("backup array length is " + backup.length);
+            myValues = backup[backup.length -1]["values"].slice();
+            console.log("myValues from backup are: ");
+            console.log(myValues);
+            console.log("length of backup array is: " + backup.length);
+            let newVal = sifted[value];
+            console.log("newVal chosen is " + newVal);
+            myValues.splice(index, 1, newVal);
+            solve(index+1, value === sifted.length-1);
+            if (solved) {return;}
+
+        }
+        // backup.pop();
+        // console.log("last entry in backup is ");
+        // console.log(backup[backup.length-1]);
+    }
+
+
+
 }
 
-//okay, those are the values. now.
 function checkPossible(element) {
-    console.log("in checkPossible");
     let curRow = Math.floor(element/length);
     let curCol = element % length;
-    //get the inputted values in the row, column and square:
-    valuesTaken = [];
-    //check columns in the current row
-    console.log("current row and column are: ");
-    console.log(curRow, curCol);
+    let valuesTaken = [];
     for (let position = curRow * length; position < (curRow+1) * length; position ++) {
-        // console.log("position: " + position);
         if (myValues[position] !== "") {
-            // console.log("adding to valuesTaken: " + myValues[position]);
             addToTaken(myValues[position]);
         }
     }
-    // console.log("after row check, valuesTaken are: ");
-    // console.log(valuesTaken);
     for (let position = curCol; position < length*length; position += length) {
         if (myValues[position] !== "") {
             addToTaken(myValues[position]);
         }
     }
-    // console.log("after column check, valuesTaken are: ");
-    // console.log(valuesTaken);
     for (let row = curRow - (curRow % squareLength); row < curRow - (curRow % squareLength) + squareLength; row ++) {
         for (let col = curCol - (curCol % squareLength); col < curCol - (curCol % squareLength) + squareLength; col ++) {
             let position = row * length + col;
@@ -122,33 +116,29 @@ function checkPossible(element) {
             }
         }
     }
-    console.log("after all checks, valuesTaken are: ");
-    console.log(valuesTaken);
-}
+    return valuesTaken;
 
-
-//helper for adding a value to the array if it's not already in the array
-
-function addToTaken(value) {
-    if (valuesTaken.indexOf(Number(value)) == -1) {
-        valuesTaken.push(Number(value));
+    function addToTaken(value) {
+        if (valuesTaken.indexOf(Number(value)) == -1) {
+            valuesTaken.push(Number(value));
+        }
     }
 }
 
-function getRandomIndex() {
-    return Math.floor(Math.random() * (availableValues.length));
-}
 
-function updateGrid(index) {
-    let myRow = Math.floor(index/length);
-    let myCol = index % length;
 
-    //get the right td element and change its inner text to myValues.index
-    let myCell = myTable[0].children[myRow].children[myCol];
-    myCell.children[0].classList.add("solution");
-    myCell.children[0].value = myValues[index];
+// function getRandomIndex() {
+//     return Math.floor(Math.random() * (availableValues.length));
+// }
 
-}
+// function updateGrid(index) {
+//     let myRow = Math.floor(index/length);
+//     let myCol = index % length;
+//     let myCell = myTable[0].children[myRow].children[myCol];
+//     myCell.children[0].classList.add("solution");
+//     myCell.children[0].value = myValues[index];
+
+// }
 
 function gatherData() {
     originalValues = [];
@@ -162,19 +152,99 @@ function gatherData() {
     }
 }
 
-function updateAvailable() {
-    // console.log("in updateAvailable function");
-    availableValues = numberList.slice();
-    valuesTaken.forEach(function(element) {
-        // console.log("element: " + element);
-        //remove the element from availableValues
+function getAvailable(taken) {
+    let availableValues = numberList.slice();
+    taken.forEach(function(element) {
         availableValues.splice(availableValues.indexOf(Number(element)), 1);
     })
+    return availableValues;
 }
 
-//put the correct values on the grid. data is in originalValues array.
-function restoreGrid(arrayOfValues) {
+function siftAvailable(available, index) {
+    let curRow = Math.floor(index/length);
+    let curCol = index % length;
+
+    let sifted = siftRow(available.slice());
+    if (sifted.length === 1) {return sifted;}
+
+    sifted = siftCol(available.slice());
+    if (sifted.length === 1) {return sifted;}
+
+    sifted = siftSection(available.slice());
+    return sifted;
+
+    function siftRow(arr) {
+        let vals = arr.slice();
+        for (let position = curRow * length; position < (curRow+1) * length; position ++) {
+            if (myValues[position] === "" && position !== index && vals.length !== 0) {
+                vals = vals.diff(getAvailable(checkPossible(position)))
+            }
+        }
+        if (vals.length === 1) {
+            return vals;
+        }
+        else {
+            return arr;
+        }
+    }
+
+    function siftCol(arr) {
+        let vals = arr.slice();
+        for (let position = curCol; position < length*length; position += length) {
+            if (myValues[position] === "" && position !== index && vals.length !== 0) {
+                vals = vals.diff(getAvailable(checkPossible(position)))
+            }
+        }
+        if (vals.length === 1) {
+            return vals;
+        }
+        else {
+            return arr;
+        }
+    }
+
+    function siftSection(arr) {
+        let vals = arr.slice();
+        for (let row = curRow - (curRow % squareLength); row < curRow - (curRow % squareLength) + squareLength; row ++) {
+            for (let col = curCol - (curCol % squareLength); col < curCol - (curCol % squareLength) + squareLength; col ++) {
+                let position = row * length + col;
+                if (myValues[position] === "" && position !== index && vals.length !== 0) {
+                    vals = vals.diff(getAvailable(checkPossible(position)))
+                }
+            }
+        }
+        if (vals.length === 1) {
+            return vals;
+        }
+        else {
+            return arr;
+        }
+        
+    }
+}
+
+function fillGrid(arrayOfValues) {
     for (let index = 0; index < length * length; index++) {
         inputs[index].value = arrayOfValues[index];
+        inputs[index].className = "";
     }   
 }
+
+function log(values, last) {
+    this.values = values;
+    this.last = last;
+}
+
+//array method that checks if there is a value in the original array that doesn't occur
+//in the other array. It returns an array with all such values, if any.
+if (!Array.prototype.diff) {
+    Array.prototype.diff = function(otherArray) {
+        let values = this.slice();
+        for (let i = 0; i < this.length; i++) {
+            if (otherArray.includes(this[i])) {
+                values.splice(values.indexOf(this[i]), 1);
+            }
+        }
+        return values;
+    }
+  }
