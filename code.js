@@ -6,7 +6,9 @@ var numberList = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 let originalValues = [];
 let myValues = [];
 let backup = [];
-let exampleValues = [7, 8, 9, 5, 6, 2, 4, 1, 3, 4, 5, 6, 7, 3, 1, 8, 9, 2, 3, 1, 2, 9, 4, 8, 6, 5, 7, 9, 3, 7, 4, 8, 5, 1, 2, 6, 5, 2, 8, 3, 1, 6, 9, 7, 4, 1, 6, 4, 2, 9, 7, 5, 3, 8, 8, 9, 5, 6, 2, 3, 7, 4, 1, 6, 7, 3, 1, 5, 4, 2, 8, 9, 2, 4, 1, 8, 7, 9, 3, 6, 5]
+let exampleValues = [
+    [7, 8, 9, 5, 6, 2, 4, 1, 3, 4, 5, 6, 7, 3, 1, 8, 9, 2, 3, 1, 2, 9, 4, 8, 6, 5, 7, 9, 3, 7, 4, 8, 5, 1, 2, 6, 5, 2, 8, 3, 1, 6, 9, 7, 4, 1, 6, 4, 2, 9, 7, 5, 3, 8, 8, 9, 5, 6, 2, 3, 7, 4, 1, 6, 7, 3, 1, 5, 4, 2, 8, 9, 2, 4, 1, 8, 7, 9, 3, 6, 5]
+]
 
 let solved;
 let myTable = document.getElementsByTagName("tbody");
@@ -85,9 +87,6 @@ function solve(index, last) {
             if (solved) {return;}
 
         }
-        // backup.pop();
-        // console.log("last entry in backup is ");
-        // console.log(backup[backup.length-1]);
     }
 
 
@@ -126,11 +125,6 @@ function checkPossible(element) {
 }
 
 
-
-// function getRandomIndex() {
-//     return Math.floor(Math.random() * (availableValues.length));
-// }
-
 // function updateGrid(index) {
 //     let myRow = Math.floor(index/length);
 //     let myCol = index % length;
@@ -147,6 +141,7 @@ function gatherData() {
             originalValues.push(Number(inputs[index].value));
         }
         else {
+            inputs[index].classList.add("solution");
             originalValues.push(inputs[index].value);   
         }
     }
@@ -223,10 +218,22 @@ function siftAvailable(available, index) {
     }
 }
 
+//get random array from examples array and fill the grid with it, at the same time,
+function fillExample() {
+//get random array from examples
+    let vals = exampleValues[getRandomIndex(exampleValues)];
+    for (let index = 0; index < length * length; index++) {
+        inputs[index].value = vals[index];
+        inputs[index].className = "";
+    }   
+    function getRandomIndex(arr) {
+        return Math.floor(Math.random() * (arr.length));
+    }
+}
+
 function fillGrid(arrayOfValues) {
     for (let index = 0; index < length * length; index++) {
         inputs[index].value = arrayOfValues[index];
-        inputs[index].className = "";
     }   
 }
 
