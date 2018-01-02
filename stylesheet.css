@@ -5,7 +5,7 @@ body {
 }
 
 table {
-    margin-top: 2em;
+    margin-top: 0.5em;
     border: 3px solid rgb(78, 18, 78);
     border-collapse: collapse;
     align-self: center;
@@ -100,13 +100,23 @@ h1 {
     text-decoration: none;
   }
 
-  .btn:focus {
+    button:focus {
         outline:0;
     }
 
 
 .example {
-    background-color: rgb(59, 206, 59);
+    background: #2ac73a;
+    padding: 5px 10px;
+    font-size: 18px;
+    border-radius: 25px;
     margin: 0.5em auto 0 auto;
     color: white;
+    font-family: Arial;
+    font-weight: 300;
+}
+
+.example:hover {
+    background: #64e03e;
+    text-decoration: none;
 }
