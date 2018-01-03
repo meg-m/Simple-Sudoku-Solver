@@ -31,8 +31,9 @@ function initiate() {
     solve(0, false);
 }
 
+//main solve function. It will be called many many times recursively.
+//the last parameter is only used for logging and popping from the array of logs
 function solve(index, last) {
-    console.log("in solve function. index is " + index);
     //finished
     if (index === 81) {
         solved = true;
@@ -45,17 +46,13 @@ function solve(index, last) {
         return solve(index+1, last);
     }
     
+    //get all legal values that can be inputted
     let available = getAvailable(checkPossible(index));
-
-    console.log("available values are:");
-    console.log(available);
     if (available.length === 0) {
         if (last) {
 
             let isLast = backup[backup.length-1]["last"];
             backup.pop();
-            console.log("popped");
-            console.log(backup[backup.length -1]);
 
             while (isLast) {
                 isLast = backup[backup.length-1]["last"];
@@ -67,41 +64,29 @@ function solve(index, last) {
 
     else {
         let sifted;
-        if (available !== 1) {
+        if (available.length !== 1) {
             sifted = siftAvailable(available, index);
         }
         else {
             sifted = available.slice()
         }
-        console.log("sifted values are: ");
-        console.log(sifted);
+        //log the current state into the backup array
         backup.push(new log(myValues.slice(), last));
-        console.log("backing up");
-        // console.log(myValues);
 
+        //go through each available values and try solving the sudoku with it.
+        //if you fail, go back and try the next value in the array, and so on...
         for (let value = 0; value < sifted.length; value++) {
-            console.log("in for loop with value: " + value);
-            console.log("index is: " + index);
-            // console.log("backups array is ");
-            // console.log(backup);
-            // console.log("backup array length is " + backup.length);
             myValues = backup[backup.length -1]["values"].slice();
-            console.log("myValues from backup are: ");
-            console.log(myValues);
-            console.log("length of backup array is: " + backup.length);
             let newVal = sifted[value];
-            console.log("newVal chosen is " + newVal);
             myValues.splice(index, 1, newVal);
             solve(index+1, value === sifted.length-1);
             if (solved) {return;}
 
         }
     }
-
-
-
 }
 
+//return an array of all the values that cannot be inputted at the current position
 function checkPossible(element) {
     let curRow = Math.floor(element/length);
     let curCol = element % length;
@@ -126,6 +111,7 @@ function checkPossible(element) {
     }
     return valuesTaken;
 
+    //adds a value to the array of values taken if it's not already in that array
     function addToTaken(value) {
         if (valuesTaken.indexOf(Number(value)) == -1) {
             valuesTaken.push(Number(value));
@@ -133,16 +119,7 @@ function checkPossible(element) {
     }
 }
 
-
-// function updateGrid(index) {
-//     let myRow = Math.floor(index/length);
-//     let myCol = index % length;
-//     let myCell = myTable[0].children[myRow].children[myCol];
-//     myCell.children[0].classList.add("solution");
-//     myCell.children[0].value = myValues[index];
-
-// }
-
+//collects all the data inputted by the user, before starting the solving process
 function gatherData() {
     originalValues = [];
     for (let index = 0; index < length * length; index++) {
@@ -156,6 +133,7 @@ function gatherData() {
     }
 }
 
+//takes in as a parameter the array of all values already taken, and returns the remaining legal ones.
 function getAvailable(taken) {
     let availableValues = numberList.slice();
     taken.forEach(function(element) {
@@ -164,6 +142,12 @@ function getAvailable(taken) {
     return availableValues;
 }
 
+//takes in an array of legal values, and the index of the current square
+//runs some tests to reduce the number of items in available values array
+//so that we don't go through all legal ones.
+//checks if some value in the legal ones can only be inputted in the current square 
+//and nowhere else in the row, column and section. if there is one such, it gets returned
+//as the sifted value.
 function siftAvailable(available, index) {
     let curRow = Math.floor(index/length);
     let curCol = index % length;
@@ -229,7 +213,6 @@ function siftAvailable(available, index) {
 
 //get random array from examples array and fill the grid with it, at the same time,
 function fillExample() {
-//get random array from examples
     let vals = exampleValues[getRandomIndex(exampleValues)];
     for (let index = 0; index < length * length; index++) {
         inputs[index].value = vals[index];
@@ -240,12 +223,15 @@ function fillExample() {
     }
 }
 
+//fill grid with values - used after sudoku has been solved
 function fillGrid(arrayOfValues) {
     for (let index = 0; index < length * length; index++) {
         inputs[index].value = arrayOfValues[index];
     }   
 }
 
+//need logging because of recursion. when an attempt fails, need to go back to the state of
+//the grid from before some choice
 function log(values, last) {
     this.values = values;
     this.last = last;
