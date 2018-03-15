@@ -8,15 +8,26 @@ table {
     margin-top: 0.5em;
     border: 3px solid rgb(78, 18, 78);
     border-collapse: collapse;
-    align-self: center;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
     background-color: white;
 }
 
 .container {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     margin-bottom: 50px;
 }
 
@@ -25,7 +36,8 @@ td {
     border: 1px solid black;
     height: 3em;
     width: 3em;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
 }
 
 td:nth-child(3),
@@ -53,7 +65,8 @@ input[type="number"] {
     /* padding: 1px; */
     margin: 1px;
     border: 0;
-    box-shadow: none;
+    -webkit-box-shadow: none;
+            box-shadow: none;
     /* box-sizing: border-box; */
 }
 
@@ -73,9 +86,14 @@ h1 {
 
 
 .btn {
-    align-self: center;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
     margin-top: 1em;
     background: #3498db;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#3498db), to(#2980b9));
+    background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+    background-image: -o-linear-gradient(top, #3498db, #2980b9);
     background-image: linear-gradient(to bottom, #3498db, #2980b9);
     border-radius: 28px;
     font-family: Arial;
@@ -87,6 +105,9 @@ h1 {
   
 .btn:hover {
 background: #3cb0fd;
+background-image: -webkit-gradient(linear, left top, left bottom, from(#3cb0fd), to(#3498db));
+background-image: -webkit-linear-gradient(top, #3cb0fd, #3498db);
+background-image: -o-linear-gradient(top, #3cb0fd, #3498db);
 background-image: linear-gradient(to bottom, #3cb0fd, #3498db);
 text-decoration: none;
 }
@@ -102,6 +123,9 @@ button:focus {
 
 .example {
     background: #72cc89;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#50a866), to(#278b40));
+    background-image: -webkit-linear-gradient(top, #50a866, #278b40);
+    background-image: -o-linear-gradient(top, #50a866, #278b40);
     background-image: linear-gradient(to bottom, #50a866, #278b40);
     padding: 5px 10px;
     font-size: 18px;
@@ -115,14 +139,23 @@ button:focus {
 
 .example:hover {
     background: #72cc89;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#72cc89), to(#589e6a));
+    background-image: -webkit-linear-gradient(top, #72cc89, #589e6a);
+    background-image: -o-linear-gradient(top, #72cc89, #589e6a);
     background-image: linear-gradient(to bottom, #72cc89, #589e6a);
     text-decoration: none;
 }
 
 footer {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+            justify-content: space-between;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     background: #005d80;
     border-top: 1px solid #ffffff;
     color: #f7f7f7;
