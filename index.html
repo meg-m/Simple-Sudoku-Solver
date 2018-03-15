@@ -8,44 +8,50 @@
 
 <body>
 <h1>Simple Sudoku Solver</h1>
-<div class="container">
+    <div class="container">
 
-<button class="example" onclick="fillExample()">Example</button>
-<table>
-    <tr>
-        <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
-    </tr>
-    <tr>
-        <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
-    </tr>
-    <tr>
-        <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
-    </tr>
-    <tr>
-        <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
-    </tr>
-    <tr>
-        <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
-    </tr>
-    <tr>
-        <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
-    </tr>
-    <tr>
-        <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
-    </tr>
-    <tr>
-        <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
-    </tr>
-    <tr>
-        <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
-    </tr>
+        <button class="example" onclick="fillExample()">Example</button>
+        <table>
+            <tr>
+                <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
+            </tr>
+            <tr>
+                <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
+            </tr>
+            <tr>
+                <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
+            </tr>
+            <tr>
+                <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
+            </tr>
+            <tr>
+                <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
+            </tr>
+            <tr>
+                <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
+            </tr>
+            <tr>
+                <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
+            </tr>
+            <tr>
+                <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
+            </tr>
+            <tr>
+                <td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td><td><input type="number" min="1" max="9"></td>
+            </tr>
 
 
-</table>
+        </table>
 
-<button class="btn" onclick="initiate()">Solve me!</button>
+        <button class="btn" onclick="initiate()">Solve me!</button>
 
-</div>
+    </div>
+
+    <footer>
+        <time>Dec 2017</time>
+        <p>Made by <a href="http://responsible-developer.com" class="author" target="_blank">Bartek Burkot</a></p>
+        <p>Code on <a href="https://github.com/Scruffy21/Simple-Sudoku-Solver" class="source" target="_blank">Github</a></p>
+    </footer>
 </body>
 
 <script src="code.js"> </script>

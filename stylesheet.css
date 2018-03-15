@@ -17,6 +17,7 @@ table {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 50px;
 }
 
 
@@ -104,6 +105,7 @@ button:focus {
     background-image: linear-gradient(to bottom, #50a866, #278b40);
     padding: 5px 10px;
     font-size: 18px;
+    font-family: Arial;
     border-radius: 25px;
     margin: 0.5em auto 0 auto;
     color: white;
@@ -115,4 +117,44 @@ button:focus {
     background: #72cc89;
     background-image: linear-gradient(to bottom, #72cc89, #589e6a);
     text-decoration: none;
+}
+
+footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #005d80;
+    border-top: 1px solid #ffffff;
+    color: #f7f7f7;
+    height: 60px;
+}
+
+footer > * {
+    margin: 0 2em;
+}
+
+footer time {
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+footer a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.author {
+    color: #47c4ca;
+}
+
+.author:hover {
+    color: #55eff7;
+}
+
+.source {
+    color: #000000;
+}
+
+.source:hover {
+    color: #518efe;
 }
